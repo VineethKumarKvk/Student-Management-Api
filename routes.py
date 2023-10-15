@@ -78,6 +78,23 @@ def add_marks():
         return jsonify(message='Marks added'),201
     return jsonify(message='Not Authorised to add Marks'),403
 
+#this route is added to practice relationships
+@app.route('/UserMarks',methods=['GET'])
+@jwt_required()
+def getMarksByUser():
+    username = get_jwt_identity()
+    existingUser = Users.query.filter_by(user_name=username).first()
+    if existingUser:
+        userData = {
+            'Username':existingUser.user_name,
+            'Marks':[{"Math":x.maths,"Physics":x.physics,"chemistry":x.chemistry} for x in existingUser.marks_got]
+        }
+        return jsonify(userData),200
+    
+    
+        
+
+
 
 @app.route('/login',methods=['POST'])
 def login():
