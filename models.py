@@ -2,6 +2,8 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column,String,Integer,Float,ForeignKey
 from app import app
 import os
+from sqlalchemy.orm import relationship
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI']= 'sqlite:///'+os.path.join(basedir,'school.db')
 app.config['SECRET_KEY']='thisisverysecret'
@@ -16,6 +18,7 @@ class Users(db.Model):
     user_name = Column(String)
     password = Column(String)
     user_role = Column(Integer,ForeignKey('roles.role_id'))
+    marks_got = relationship('Marks',backref='student')
 
 class Marks(db.Model):
     marks_id = Column(Integer,primary_key=True)
