@@ -72,7 +72,7 @@ def add_marks():
             existing_marks.chemistry = chemistry_marks
             db.session.commit()
             return jsonify(message='Marks are updated'),200
-        new_marks = Marks(marks_id=Marks.query.count()+1,student_id=student_id,maths=math_marks,physics=physics_marks,chemistry=chemistry_marks)
+        new_marks = Marks(student_id=student_id,maths=math_marks,physics=physics_marks,chemistry=chemistry_marks)
         db.session.add(new_marks)
         db.session.commit()
         return jsonify(message='Marks added'),201
@@ -90,6 +90,7 @@ def getMarksByUser():
             'Marks':[{"Math":x.maths,"Physics":x.physics,"chemistry":x.chemistry} for x in existingUser.marks_got]
         }
         return jsonify(userData),200
+    return '',404
     
     
         
