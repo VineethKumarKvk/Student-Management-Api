@@ -15,14 +15,14 @@ class Roles(db.Model):
 
 class Users(db.Model):
     user_id = Column(Integer,primary_key=True)
-    user_name = Column(String)
+    user_name = Column(String,unique=True)
     password = Column(String)
     user_role = Column(Integer,ForeignKey('roles.role_id'))
     marks_got = relationship('Marks',backref='student')
 
 class Marks(db.Model):
-    marks_id = Column(Integer,primary_key=True)
+    marks_id = Column(Integer,primary_key=True,autoincrement=True)
     student_id = Column(Integer,ForeignKey('users.user_id'))
-    maths = Column(Float)
-    physics = Column(Float)
-    chemistry = Column(Float)
+    maths = Column(Float,default=0)
+    physics = Column(Float,default=0)
+    chemistry = Column(Float,default=0)
