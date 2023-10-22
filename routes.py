@@ -67,9 +67,12 @@ def add_marks():
 
         existing_marks = Marks.query.filter_by(student_id=student_id).first()
         if existing_marks:
-            existing_marks.maths = math_marks
-            existing_marks.physics = physics_marks
-            existing_marks.chemistry = chemistry_marks
+            if math_marks:
+                existing_marks.maths = math_marks
+            if physics_marks:
+                existing_marks.physics = physics_marks
+            if chemistry_marks:
+                existing_marks.chemistry = chemistry_marks
             db.session.commit()
             return jsonify(message='Marks are updated'),200
         new_marks = Marks(marks_id=Marks.query.count()+1,student_id=student_id,maths=math_marks,physics=physics_marks,chemistry=chemistry_marks)
