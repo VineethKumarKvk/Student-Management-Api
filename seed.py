@@ -31,8 +31,15 @@ def db_seed():
         {'student_id':1,'maths':100,'physics':95,'chemistry':90},
         {'student_id':2,'maths':100,'physics':98,'chemistry':99}
     ]
+
+    subject_data = [
+        {'subject_name':'Maths','teacher_id':5},
+        {'subject_name':'Physics'},
+        {'subject_name':'Chemistry'},
+    ]
     db.session.bulk_insert_mappings(Roles,roles_data)
     db.session.bulk_insert_mappings(Users,user_data)
     db.session.bulk_insert_mappings(Marks,marks_data)
+    db.session.bulk_insert_mappings(Subjects,subject_data)
     db.session.commit()
     print('seeded')

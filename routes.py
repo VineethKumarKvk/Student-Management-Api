@@ -91,6 +91,18 @@ def getMarksByUser():
         }
         return jsonify(userData),200
     return '',404
+
+@app.route('/getSubject',methods=['GET'])
+def getSubjects():
+    subjectname = request.args['name']
+    existingSubject = db.session.query(Subjects,Users).join(Users,Subjects.teacher_id == Users.user_id).filter(Subjects.subject_name==subjectname).all()
+    output = []
+    if existingSubject:
+        for subject,user in existingSubject:
+            #output.append({'subject':subject.subject_name,'teacher':[{'name':x.user_name} for x in subject.userdetails]})
+            output.append({'subject':subject.subject_name,'teacher':[{'name':x.subject_name}for x in user.subjects_dealing]})
+        return jsonify(output),200
+    return '',404
     
     
         
